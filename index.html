@@ -1217,6 +1217,22 @@ body.lock-scroll{
   <!-- FIREBASE V8 CDN -->  
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>  
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script> 
+  <!-- FIREBASE INIT (FINAL FIX) -->
+<script>
+var firebaseConfig = {
+  apiKey: "AIzaSyBaxysflZZXodtM1DGmFjtC90-jQtY1LiM",
+  authDomain: "nikahan-cfd3d.firebaseapp.com",
+  databaseURL: "https://nikahan-cfd3d-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "nikahan-cfd3d",
+  storageBucket: "nikahan-cfd3d.appspot.com",
+  messagingSenderId: "119408707223",
+  appId: "1:119408707223:web:2abfe5ae0a1985ae6b4bd2"
+};
+
+// INIT
+firebase.initializeApp(firebaseConfig);
+var db = firebase.database();
+</script>
   <script>
 function buatIdTamu(nama){
   return nama
@@ -1295,21 +1311,7 @@ Baarakallahu laka wa baaraka 'alaika
 wa jama'a bainakumaa fii khaiir`
 }
 };
-/************************************************  
- * FIREBASE INIT  
- ************************************************/  
-var firebaseConfig = {  
-  apiKey: "AIzaSyAbFiLWZS5H1672SpouCn1deEAAn4qVqDs",  
-  authDomain: "undanganwidi.firebaseapp.com",  
-  databaseURL: "https://undanganwidi-default-rtdb.asia-southeast1.firebasedatabase.app",  
-  projectId: "undanganwidi",  
-  storageBucket: "undanganwidi.appspot.com",  
-  messagingSenderId: "1008914265977",  
-  appId: "1:1008914265977:web:9ba70d9f8a1ab4b56c61a8"  
-};  
-firebase.initializeApp(firebaseConfig);  
-var db = firebase.database();  
-  
+
 /************************************************  
  * NAMA TAMU DARI URL  
  ************************************************/  
