@@ -1321,12 +1321,44 @@ cursor:pointer;
 .btn-qris-download:hover{
   background:#d4af37;
 }
+/**/
 
+#loadingAfterOpen{
+position:fixed;
+inset:0;
+background:#faf7f4;
+display:none;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+z-index:9999;
+}
+
+#loadingAfterOpen.show{
+display:flex;
+}
+
+.loading-flower{
+width:110px;
+margin-bottom:20px;
+animation:spinFlower 7s linear infinite;
+}
+
+@keyframes spinFlower{
+from{transform:rotate(0deg)}
+to{transform:rotate(360deg)}
+}
+
+.loading-couple{
+font-family:'Great Vibes',cursive;
+font-size:38px;
+color:#b8860b;
+}
 </style>
 </head>  
 <body>  <!-- OPENING --> 
 <div id="app">
-  
+ 
 <div id="opening">
   <div class="opening-box" id="openingBox">
 
@@ -1352,7 +1384,17 @@ cursor:pointer;
     </div>
   </div>
 </div>
+<div id="loadingAfterOpen">
+  <div class="loading-inner">
 
+    <img src="flower.png" class="loading-flower">
+
+    <h2 class="loading-couple">
+      Nurul & Rian
+    </h2>
+
+  </div>
+</div>
 <!-- POPUP QR -->
 <div id="qrPopup">
   <div class="qr-box">
@@ -1761,11 +1803,22 @@ function bukaUndangan(){
   }
 
   const opening = document.getElementById("opening");
+  const loading = document.getElementById("loadingAfterOpen");
+
   opening.style.opacity = "0";
   opening.style.pointerEvents = "none";
 
   setTimeout(()=>{
     opening.style.display = "none";
+
+    // tampilkan loading
+    loading.classList.add("show");
+
+    // hilangkan loading
+    setTimeout(()=>{
+      loading.style.display="none";
+    },2500);
+
   },600);
 
   const music=document.getElementById("bgMusic");
@@ -1774,7 +1827,6 @@ function bukaUndangan(){
 
   document.body.classList.remove("lock-scroll");
 }
-  
 /************************************************  
  * TAB NAVIGATION  
  ************************************************/  
