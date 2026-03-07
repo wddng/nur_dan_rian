@@ -1305,6 +1305,22 @@ cursor:pointer;
   box-shadow:0 3px 8px rgba(184,134,11,0.35);
 }
 
+/* ------*/
+.btn-qris-download{
+  display:inline-block;
+  padding:10px 18px;
+  background:#118eea;
+  color:white;
+  border-radius:8px;
+  text-decoration:none;
+  font-size:14px;
+  margin-top:10px;
+  transition:0.3s;
+}
+
+.btn-qris-download:hover{
+  background:#d4af37;
+}
 </style>
 </head>  
 <body>  <!-- OPENING --> 
@@ -1576,7 +1592,17 @@ Kirim via DANA
 
 <div id="giftQris" class="giftMethod">
 
-<img src="qris.png" width="180">
+<div class="qris-box">
+
+<img id="qrisImage" src="qris.png" alt="QRIS" width="180px">
+
+<br><br>
+
+<a href="images/qris.png" download="qris-pembayaran.png" class="btn-qris-download">
+Simpan QRIS
+</a>
+
+</div>
 
 <p>Scan QRIS untuk mengirim hadiah</p>
 
