@@ -15,11 +15,14 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,Arial,sans-serif;}  
 /* === MOBILE FIXED CONTAINER === */
 body{
-  margin:0;
-  display:flex;
-  justify-content:center;
-  background:#000000; /* area luar HP */
-  overscroll-behavior:none;
+margin:0;
+background:#000;
+display:flex;
+justify-content:center;
+align-items:flex-start;
+}
+,body{
+overflow-x:hidden;
 }
 
 .container {
@@ -33,7 +36,7 @@ body{
   min-height:100vh;
   background:#faf7f4;
   position:relative;
-  overflow:hidden;
+  overflow-x:hidden;
 }
 body::before{
   content:'';
@@ -1321,7 +1324,61 @@ cursor:pointer;
 .btn-qris-download:hover{
   background:#d4af37;
 }
+/**/
+/* LOADING UNDANGAN */
 
+#loadingScreen{
+position:fixed;
+top:0;
+left:50%;
+transform:translateX(-50%);
+width:100%;
+max-width:430px;
+height:100vh;
+background:linear-gradient(135deg,#fffaf5,#fdf6ea);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:99999;
+}
+
+.loading-content{
+text-align:center;
+}
+
+.flower-loader{
+font-size:70px;
+animation:flowerSpin 3s linear infinite;
+margin-bottom:20px;
+}
+
+.loading-name{
+font-family:'Great Vibes',cursive;
+font-size:40px;
+color:#b8860b;
+margin-bottom:8px;
+}
+
+#loadingScreen p{
+color:#777;
+letter-spacing:2px;
+font-size:14px;
+}
+
+@keyframes flowerSpin{
+0%{transform:rotate(0deg)}
+100%{transform:rotate(360deg)}
+}
+/* Hilangkan scrollbar tapi tetap bisa scroll */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar{
+display:none;
+}
+
+html,body{
+-ms-overflow-style:none;
+scrollbar-width:none;
+}
 </style>
 </head>  
 <body>  <!-- OPENING --> 
@@ -1363,12 +1420,24 @@ cursor:pointer;
   </div>
 </div>
   
-  
+ 
 <audio id="bgMusic" loop>  
   <source src="lagu.mp3" type="audio/mpeg">  
 </audio>
  <div id="stickyBride">
   <span>Nurul & Rian</span>
+</div>
+<div id="loadingScreen">
+  <div class="loading-content">
+
+    <div class="flower-loader">
+      🌸
+    </div>
+
+    <h2 class="loading-name">Nurul & Rian</h2>
+    <p>Membuka Undangan...</p>
+
+  </div>
 </div>
   <header>
   <div class="header-text">    
@@ -1749,32 +1818,38 @@ if(homeCard){
  ************************************************/  
 function bukaUndangan(){
 
-  // FULLSCREEN MODE
-  const doc = document.documentElement;
+const loading = document.getElementById("loadingScreen");
+const opening = document.getElementById("opening");
+const home = document.getElementById("home");
 
-  if(doc.requestFullscreen){
-    doc.requestFullscreen();
-  }else if(doc.webkitRequestFullscreen){
-    doc.webkitRequestFullscreen();
-  }else if(doc.msRequestFullscreen){
-    doc.msRequestFullscreen();
-  }
+loading.style.display="flex";
 
-  const opening = document.getElementById("opening");
-  opening.style.opacity = "0";
-  opening.style.pointerEvents = "none";
+setTimeout(()=>{
 
-  setTimeout(()=>{
-    opening.style.display = "none";
-  },600);
+// hilangkan opening
+opening.style.display="none";
 
-  const music=document.getElementById("bgMusic");
-  music.volume=0.5;
-  music.play().catch(()=>{});
+// hilangkan loading
+loading.style.display="none";
 
-  document.body.classList.remove("lock-scroll");
+// aktifkan scroll kembali
+document.body.style.overflow="auto";
+
+// scroll ke home
+window.scrollTo(0,0);
+
+// play music
+const music=document.getElementById("bgMusic");
+if(music){
+music.volume=0.5;
+music.play().catch(()=>{});
 }
-  
+
+},2500);
+
+}
+
+
 /************************************************  
  * TAB NAVIGATION  
  ************************************************/  
