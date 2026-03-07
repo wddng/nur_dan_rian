@@ -15,14 +15,11 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,Arial,sans-serif;}  
 /* === MOBILE FIXED CONTAINER === */
 body{
-margin:0;
-background:#000;
-display:flex;
-justify-content:center;
-align-items:flex-start;
-}
-,body{
-overflow-x:hidden;
+  margin:0;
+  display:flex;
+  justify-content:center;
+  background:#000000; /* area luar HP */
+  overscroll-behavior:none;
 }
 
 .container {
@@ -36,7 +33,7 @@ overflow-x:hidden;
   min-height:100vh;
   background:#faf7f4;
   position:relative;
-  overflow-x:hidden;
+  overflow:hidden;
 }
 body::before{
   content:'';
@@ -1369,16 +1366,6 @@ font-size:14px;
 0%{transform:rotate(0deg)}
 100%{transform:rotate(360deg)}
 }
-/* Hilangkan scrollbar tapi tetap bisa scroll */
-html::-webkit-scrollbar,
-body::-webkit-scrollbar{
-display:none;
-}
-
-html,body{
--ms-overflow-style:none;
-scrollbar-width:none;
-}
 </style>
 </head>  
 <body>  <!-- OPENING --> 
@@ -1409,7 +1396,18 @@ scrollbar-width:none;
     </div>
   </div>
 </div>
+<div id="loadingScreen">
+  <div class="loading-content">
 
+    <div class="flower-loader">
+      🌸
+    </div>
+
+    <h2 class="loading-name">Nurul & Rian</h2>
+    <p>Membuka Undangan...</p>
+
+  </div>
+</div>
 <!-- POPUP QR -->
 <div id="qrPopup">
   <div class="qr-box">
@@ -1426,18 +1424,6 @@ scrollbar-width:none;
 </audio>
  <div id="stickyBride">
   <span>Nurul & Rian</span>
-</div>
-<div id="loadingScreen">
-  <div class="loading-content">
-
-    <div class="flower-loader">
-      🌸
-    </div>
-
-    <h2 class="loading-name">Nurul & Rian</h2>
-    <p>Membuka Undangan...</p>
-
-  </div>
 </div>
   <header>
   <div class="header-text">    
@@ -1818,38 +1804,32 @@ if(homeCard){
  ************************************************/  
 function bukaUndangan(){
 
-const loading = document.getElementById("loadingScreen");
-const opening = document.getElementById("opening");
-const home = document.getElementById("home");
+  // FULLSCREEN MODE
+  const doc = document.documentElement;
 
-loading.style.display="flex";
+  if(doc.requestFullscreen){
+    doc.requestFullscreen();
+  }else if(doc.webkitRequestFullscreen){
+    doc.webkitRequestFullscreen();
+  }else if(doc.msRequestFullscreen){
+    doc.msRequestFullscreen();
+  }
 
-setTimeout(()=>{
+  const opening = document.getElementById("opening");
+  opening.style.opacity = "0";
+  opening.style.pointerEvents = "none";
 
-// hilangkan opening
-opening.style.display="none";
+  setTimeout(()=>{
+    opening.style.display = "none";
+  },600);
 
-// hilangkan loading
-loading.style.display="none";
+  const music=document.getElementById("bgMusic");
+  music.volume=0.5;
+  music.play().catch(()=>{});
 
-// aktifkan scroll kembali
-document.body.style.overflow="auto";
-
-// scroll ke home
-window.scrollTo(0,0);
-
-// play music
-const music=document.getElementById("bgMusic");
-if(music){
-music.volume=0.5;
-music.play().catch(()=>{});
+  document.body.classList.remove("lock-scroll");
 }
-
-},2500);
-
-}
-
-
+  
 /************************************************  
  * TAB NAVIGATION  
  ************************************************/  
@@ -2561,10 +2541,6 @@ window.addEventListener("scroll", () => {
 
 });
 
-
-window.onload = function(){
-window.scrollTo(0,0);
-};
 </script>
 
 </body>  
