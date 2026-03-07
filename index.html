@@ -1321,7 +1321,68 @@ cursor:pointer;
 .btn-qris-download:hover{
   background:#d4af37;
 }
+/**/
 
+/* LOADING UNDANGAN */
+
+#loadingScreen{
+position:fixed;
+top:0;
+left:50%;
+transform:translateX(-50%);
+width:100%;
+max-width:430px;
+height:100vh;
+background:linear-gradient(135deg,#fffaf5,#fdf6ea);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:99999;
+}
+
+.loading-content{
+text-align:center;
+}
+
+.flower-loader{
+font-size:70px;
+animation:flowerSpin 3s linear infinite;
+margin-bottom:20px;
+}
+
+.loading-name{
+font-family:'Great Vibes',cursive;
+font-size:40px;
+color:#b8860b;
+margin-bottom:8px;
+}
+
+#loadingScreen p{
+color:#777;
+letter-spacing:2px;
+font-size:14px;
+}
+
+@keyframes flowerSpin{
+0%{transform:rotate(0deg)}
+100%{transform:rotate(360deg)}
+}
+/**/
+
+#home{
+animation:fadeHome 1s ease;
+}
+
+@keyframes fadeHome{
+from{
+opacity:0;
+transform:translateY(20px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
 </style>
 </head>  
 <body>  <!-- OPENING --> 
@@ -1352,7 +1413,18 @@ cursor:pointer;
     </div>
   </div>
 </div>
+<div id="loadingScreen">
+  <div class="loading-content">
 
+    <div class="flower-loader">
+      🌸
+    </div>
+
+    <h2 class="loading-name">Nurul & Rian</h2>
+    <p>Membuka Undangan...</p>
+
+  </div>
+</div>
 <!-- POPUP QR -->
 <div id="qrPopup">
   <div class="qr-box">
@@ -1759,19 +1831,34 @@ function bukaUndangan(){
   }else if(doc.msRequestFullscreen){
     doc.msRequestFullscreen();
   }
+ const loading = document.getElementById("loadingScreen");
+const opening = document.getElementById("opening");
+const home = document.getElementById("home");
 
-  const opening = document.getElementById("opening");
-  opening.style.opacity = "0";
-  opening.style.pointerEvents = "none";
+loading.style.display="flex";
 
-  setTimeout(()=>{
-    opening.style.display = "none";
-  },600);
+setTimeout(()=>{
 
-  const music=document.getElementById("bgMusic");
-  music.volume=0.5;
-  music.play().catch(()=>{});
+// hilangkan opening
+opening.style.display="none";
 
+// hilangkan loading
+loading.style.display="none";
+
+// aktifkan scroll kembali
+document.body.style.overflow="auto";
+
+// scroll ke home
+window.scrollTo(0,0);
+
+// play music
+const music=document.getElementById("bgMusic");
+if(music){
+music.volume=0.5;
+music.play().catch(()=>{});
+}
+
+},2500);
   document.body.classList.remove("lock-scroll");
 }
   
