@@ -1471,6 +1471,57 @@ color:#555;
 .closeGift:hover{
 color:black;
 }
+
+/***/
+.giftTabs{
+display:flex;
+gap:10px;
+justify-content:center;
+margin:15px 0;
+}
+
+.tabBtn{
+background:#eee;
+border:none;
+padding:10px 15px;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.tabBtn.active{
+background:#118eea;
+color:white;
+}
+
+.giftContent{
+margin-top:15px;
+}
+
+.qrisButtons{
+margin-top:10px;
+display:flex;
+gap:10px;
+justify-content:center;
+}
+
+.qrisBtn{
+background:#444;
+color:white;
+border:none;
+padding:8px 12px;
+border-radius:8px;
+cursor:pointer;
+}
+
+.saveQrisBtn{
+background:#2ecc71;
+color:white;
+border:none;
+padding:8px 12px;
+border-radius:8px;
+cursor:pointer;
+}
 </style>
 </head>  
 <body>  <!-- OPENING --> 
@@ -1712,21 +1763,58 @@ color:black;
 
 <div class="giftEnvelope">💌</div>
 
-<p>Kirim hadiah melalui DANA</p>
+<p>Kehadiran dan Do'a restu anda sudah sangat berarti bagi kami</p>
+
+<div class="giftTabs">
+
+<button class="tabBtn active" onclick="showGift('dana')">
+💙 DANA
+</button>
+
+<button class="tabBtn" onclick="showGift('qris')">
+📷 QRIS
+</button>
+
+</div>
+
+
+<!-- DANA -->
+<div id="danaGift" class="giftContent">
 
 <div class="danaBox">
-<p id="danaNumber">0896 3225 8124</p>
+<p id="danaNumber">0896 **** 8124</p>
 <small>a.n Nurul Fauziah</small>
 </div>
 
 <button class="danaBtn" onclick="kirimDana()">
-💙 Kirim Hadiah via DANA
+💙 Kirim via DANA
 </button>
 
-<div class="qrBox" onclick="zoomQR()">
-<img src="qris.png" id="qrDana">
-<p>Klik QR untuk memperbesar</p>
 </div>
+
+
+<!-- QRIS -->
+<div id="qrisGift" class="giftContent" style="display:none">
+
+<img src="qris.png" width="100px" id="qrDana">
+
+<div class="qrisButtons">
+
+<button class="qrisBtn" onclick="zoomQR()">
+🔍 Perbesar QR
+</button>
+
+<button class="saveQrisBtn" onclick="saveQRIS()">
+💾 Simpan QRIS
+</button>
+
+</div>
+
+</div>
+
+
+
+
 
 </div>
 </div>
@@ -2641,6 +2729,30 @@ let popup=document.getElementById("giftPopup");
 
 if(e.target==popup){
 popup.classList.remove("show");
+}
+
+}
+function showGift(type){
+
+let dana = document.getElementById("danaGift");
+let qris = document.getElementById("qrisGift");
+
+let tabs = document.querySelectorAll(".tabBtn");
+
+tabs.forEach(btn => btn.classList.remove("active"));
+
+if(type === "dana"){
+
+dana.style.display = "block";
+qris.style.display = "none";
+tabs[0].classList.add("active");
+
+}else{
+
+dana.style.display = "none";
+qris.style.display = "block";
+tabs[1].classList.add("active");
+
 }
 
 }
