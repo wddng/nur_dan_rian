@@ -1796,7 +1796,7 @@ cursor:pointer;
 <!-- QRIS -->
 <div id="qrisGift" class="giftContent" style="display:none">
 
-<img src="qris.png" width="100px" id="qrDana">
+<img src="qris.png" width="200vh" id="qrDana">
 
 <div class="qrisButtons">
 
@@ -2718,6 +2718,19 @@ max-width:90%;
 </style>
 <img src="${img}">
 `);
+
+}
+function saveQRIS(){
+
+const img = document.getElementById("qrDana").src;
+
+const link = document.createElement("a");
+link.href = img;
+link.download = "QRIS-Nurul-Rian.png";
+
+document.body.appendChild(link);
+link.click();
+document.body.removeChild(link);
 
 }
 function tutupGift(){
