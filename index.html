@@ -1383,6 +1383,80 @@ opacity:1;
 transform:translateY(0);
 }
 }
+
+/****/
+.giftPopup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:9999;
+}
+
+.giftCard{
+background:white;
+padding:30px;
+border-radius:20px;
+text-align:center;
+width:320px;
+animation:popGift .4s ease;
+}
+
+@keyframes popGift{
+from{transform:scale(.7);opacity:0;}
+to{transform:scale(1);opacity:1;}
+}
+
+.giftEnvelope{
+font-size:45px;
+margin:10px 0;
+animation:shake 2s infinite;
+}
+
+@keyframes shake{
+0%{transform:rotate(0)}
+25%{transform:rotate(5deg)}
+50%{transform:rotate(0)}
+75%{transform:rotate(-5deg)}
+100%{transform:rotate(0)}
+}
+
+.danaBox{
+background:#f5f5f5;
+padding:12px;
+border-radius:10px;
+margin:15px 0;
+font-weight:bold;
+}
+
+.danaBtn{
+background:linear-gradient(135deg,#118eea,#3bb3ff);
+color:white;
+border:none;
+padding:12px 20px;
+border-radius:10px;
+cursor:pointer;
+font-size:15px;
+transition:.3s;
+}
+
+.danaBtn:hover{
+transform:scale(1.05);
+box-shadow:0 6px 15px rgba(17,142,234,0.5);
+}
+
+.qrBox img{
+width:140px;
+margin-top:15px;
+cursor:pointer;
+}
+
+
 </style>
 </head>  
 <body>  <!-- OPENING --> 
@@ -1614,73 +1688,30 @@ transform:translateY(0);
 
 </div>
 <!-- POPUP AMPlOP DIGITAL PREMIUM -->
-<!-- POPUP AMPlOP DIGITAL -->
-
-<div id="giftPopup">
+<div id="giftPopup" class="giftPopup">
 
 <div class="giftCard">
 
-<span class="closeGift" onclick="closeGift()">✕</span>
+<h2>Amplop Digital</h2>
 
-<h2 class="section-title">Amplop Digital</h2>
+<div class="giftEnvelope">💌</div>
 
-<p>Doa restu Anda merupakan hadiah terindah bagi kami</p>
-<br>
+<p>Kirim hadiah melalui DANA</p>
 
-<!-- PILIH METODE -->
+<div class="danaBox">
 
-<div class="giftTabs">
-
-<button onclick="showGift('dana')" class="active">DANA</button>
-
-
-
-<button onclick="showGift('qris')">QRIS</button>
+<p id="danaNumber">0896 3225 8124</p>
+<small>a.n Nurul Fauziah</small>
 
 </div>
 
-
-<!-- DANA -->
-
-<div id="giftDana" class="giftMethod">
-
-<img src="https://upload.wikimedia.org/wikipedia/commons/7/72/Logo_dana_blue.svg" width="80">
-
-<p id="danaNumber">089632258124</p>
-
-<button onclick="copyText('danaNumber')">
-Salin Nomor
+<button class="danaBtn" onclick="kirimDana()">
+💙 Kirim Hadiah via DANA
 </button>
 
-
-<button class="btnGift" onclick="kirimDana()">
-Kirim via DANA
-</button>
-
-</div>
-
-
-
-
-
-<!-- QRIS -->
-
-<div id="giftQris" class="giftMethod">
-
-<div class="qris-box">
-
-<img id="qrisImage" src="qris.png" alt="QRIS" width="180px">
-
-<br><br>
-
-<a href="qris.png" download="qris-pembayaran.png" class="btn-qris-download">
-Simpan QRIS
-</a>
-
-</div>
-
-<p>Scan QRIS untuk mengirim hadiah</p>
-
+<div class="qrBox" onclick="zoomQR()">
+<img src="https://qr.dana.id/v1/281012012021090360751182" id="qrDana">
+<p>Klik QR untuk memperbesar</p>
 </div>
 
 </div>
@@ -2548,17 +2579,46 @@ this.value = "Rp "+rupiah;
 
 function kirimDana(){
 
-let nomor = "6289632258124";
+const danaLink="https://link.dana.id/minta?full_url=https://qr.dana.id/v1/281012012021090360751182";
 
-let nominal = document.getElementById("donasi").value
-.replace(/[^0-9]/g,""); // ambil angka saja
+const nomor=document.getElementById("danaNumber").innerText;
 
-let url = "https://link.dana.id/send?phone=" + nomor + "&amount=" + nominal;
+// copy nomor
+navigator.clipboard.writeText(nomor).then(()=>{
+alert("Nomor DANA berhasil disalin 👍");
+});
 
-window.open(url,"_blank");
+// buka dana
+setTimeout(()=>{
+window.location.href=danaLink;
+},500);
 
 }
 
+function zoomQR(){
+
+let img=document.getElementById("qrDana").src;
+
+let popup=window.open("");
+
+popup.document.write(`
+<style>
+body{
+margin:0;
+background:black;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+img{
+max-width:90%;
+}
+</style>
+<img src="${img}">
+`);
+
+}
 
 // *********
 const floatingGift = document.getElementById("floatingGift");
