@@ -1399,6 +1399,7 @@ z-index:9999;
 }
 
 .giftCard{
+position:relative;
 background:white;
 padding:30px;
 border-radius:20px;
@@ -1456,7 +1457,20 @@ margin-top:15px;
 cursor:pointer;
 }
 
+.closeGift{
+position:absolute;
+top:10px;
+right:12px;
+background:none;
+border:none;
+font-size:22px;
+cursor:pointer;
+color:#555;
+}
 
+.closeGift:hover{
+color:black;
+}
 </style>
 </head>  
 <body>  <!-- OPENING --> 
@@ -1692,6 +1706,8 @@ cursor:pointer;
 
 <div class="giftCard">
 
+<button class="closeGift" onclick="tutupGift()">✕</button>
+
 <h2>Amplop Digital</h2>
 
 <div class="giftEnvelope">💌</div>
@@ -1699,10 +1715,8 @@ cursor:pointer;
 <p>Kirim hadiah melalui DANA</p>
 
 <div class="danaBox">
-
 <p id="danaNumber">0896 3225 8124</p>
 <small>a.n Nurul Fauziah</small>
-
 </div>
 
 <button class="danaBtn" onclick="kirimDana()">
@@ -1710,12 +1724,11 @@ cursor:pointer;
 </button>
 
 <div class="qrBox" onclick="zoomQR()">
-<img src="https://qr.dana.id/v1/281012012021090360751182" id="qrDana">
+<img src="qris.png" id="qrDana">
 <p>Klik QR untuk memperbesar</p>
 </div>
 
 </div>
-
 </div>
   
 
@@ -2619,7 +2632,18 @@ max-width:90%;
 `);
 
 }
+function tutupGift(){
+document.getElementById("giftPopup").classList.remove("show");
+}
+window.onclick = function(e){
 
+let popup=document.getElementById("giftPopup");
+
+if(e.target==popup){
+popup.classList.remove("show");
+}
+
+}
 // *********
 const floatingGift = document.getElementById("floatingGift");
 
